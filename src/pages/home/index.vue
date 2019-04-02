@@ -1,22 +1,17 @@
 <template>
   <div>
     <!-- 搜索条 -->
-    <div class="search-bar">
-      <div class="search-input">
-       <!-- <icon type='search' color='#999'/> -->
-       <input placeholder="搜索"/>
-      </div>
-    </div>
+    <search-bar></search-bar>
     <!-- 轮播图 -->
     <swiper indicator-dots='true'>
         <swiper-item :key='item.goods_id' v-for='item in swiper'>
-          <image :src="item.image_src" class="slide-image" />
+          <image :src="item.image_src" class="slide-image"/>
         </swiper-item>
     </swiper>
     <!-- 菜单 -->
     <div class="menu">
-      <div :key="index" v-for='(item,index) in menu'  class="menu-item">
-        <img :src="item.image_src"/>
+      <div :key='index' v-for='(item, index) in menu' class="menu-item">
+        <img :src="item.image_src">
       </div>
     </div>
     <!-- 商品列表 -->
@@ -31,12 +26,12 @@
         </div>
         <div class="right">
           <!-- 这里v-if的作用是去掉数组中的第一张图片,让i从1开始,跳过0 -->
-          <img v-if='i > 0' :key='i' v-for='(img,i) in item.product_list' :src="img.image_src" mode="aspectFill">
+          <img v-if='i > 0' :key='i' v-for='(img, i) in item.product_list' :src="img.image_src" mode="aspectFill">
         </div>
       </div>
     </div>
     <!-- 回到顶部按钮 -->
-    <div class="toTop" @click="toTopHandle" v-if="isShow">
+    <div class="toTop" @click='toTopHandle' v-if='isShow'>
       ︿
       <p>顶部</p>
     </div>
@@ -46,6 +41,7 @@
 
 <script>
 import request from '../../utils/request.js'
+import SearchBar from '../../components/searchbar'
 export default {
   data () {
     return {
@@ -58,7 +54,7 @@ export default {
   methods: {
     // 方法写到methods中
     async queryData (path) {
-      // 通用接口调用接口与
+      // 通用接口调用方法
       let res = await request(path)
       return res.data.message
     },
@@ -122,6 +118,9 @@ export default {
       this.menu = await this.queryData('home/catitems')
       this.floor = await this.queryData('home/floordata')
     }
+  },
+  components: {
+    'search-bar': SearchBar
   },
   mounted () {
     // 调用接口请求方法
