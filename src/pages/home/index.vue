@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import request from '../../utils/request.js'
 export default {
   data () {
     return {
@@ -32,33 +33,54 @@ export default {
     }
   },
   methods: {
-    swiperData () {
-      // 请求后台接口获取轮播图数据
-      let that = this
-      mpvue.request({
-        url: 'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
-        success: function (res) {
-          // console.log(res)
-          let {message} = res.data
-          // console.log(message)
-          // console.log(this)
-          that.swiper = message
-        }
-      })
+    async queryData (path) {
+      // 通用接口调用接口与
+      let res = await request(path)
+      return res.data.message
     },
-    menuData () {
+    async swiperData () {
+      // 请求后台接口获取轮播图数据
+      // let that = this
+      // mpvue.request({
+      //   url: 'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
+      //   success: function (res) {
+      //     // console.log(res)
+      //     let {message} = res.data
+      //     // console.log(message)
+      //     // console.log(this)
+      //     that.swiper = message
+      //   }
+      // })
+      // let url = 'home/swiperdata'
+      // request(url, 'get', {}, {}, () => {
+      //   console.log(1)
+      // })
+      // request(url).then(res => {
+      //   console.log(res)
+      // })
+      // let res = await request('home/swiperdata')
+      // let {message} = res.data
+      // console.log(message)
+      // this.swiper = message
+      // this.swiper = res.data.message
+      this.swiper = await this.queryData('home/swiperdata')
+    },
+    async menuData () {
       // 请求后台接口获取菜单数据
-      let that = this
-      mpvue.request({
-        url: 'https://www.zhengzhicheng.cn/api/public/v1/home/catitems',
-        success: function (res) {
-          // console.log(res)
-          let {message} = res.data
-          console.log(message)
-          // console.log(this)
-          that.menu = message
-        }
-      })
+      // let that = this
+      // mpvue.request({
+      //   url: 'home/catitems',
+      //   success: function (res) {
+      //     // console.log(res)
+      //     let {message} = res.data
+      //     // console.log(message)
+      //     // console.log(this)
+      //     that.menu = message
+      //   }
+      // })
+      // let res = await request('home/catitems')
+      // this.menu = res.data.message
+      this.menu = await this.queryData('home/catitems')
     }
   },
   mounted () {
