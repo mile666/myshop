@@ -40,6 +40,7 @@
       ︿
       <p>顶部</p>
     </div>
+
   </div>
 </template>
 
@@ -55,72 +56,87 @@ export default {
     }
   },
   methods: {
+    // 方法写到methods中
     async queryData (path) {
       // 通用接口调用接口与
       let res = await request(path)
       return res.data.message
     },
-    async swiperData () {
-      // 请求后台接口获取轮播图数据
-      // let that = this
-      // mpvue.request({
-      //   url: 'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
-      //   success: function (res) {
-      //     // console.log(res)
-      //     let {message} = res.data
-      //     // console.log(message)
-      //     // console.log(this)
-      //     that.swiper = message
-      //   }
-      // })
-      // let url = 'home/swiperdata'
-      // request(url, 'get', {}, {}, () => {
-      //   console.log(1)
-      // })
-      // request(url).then(res => {
-      //   console.log(res)
-      // })
-      // let res = await request('home/swiperdata')
-      // let {message} = res.data
-      // console.log(message)
-      // this.swiper = message
-      // this.swiper = res.data.message
-      this.swiper = await this.queryData('home/swiperdata')
-    },
-    async menuData () {
-      // 请求后台接口获取菜单数据
-      // let that = this
-      // mpvue.request({
-      //   url: 'home/catitems',
-      //   success: function (res) {
-      //     // console.log(res)
-      //     let {message} = res.data
-      //     // console.log(message)
-      //     // console.log(this)
-      //     that.menu = message
-      //   }
-      // })
-      // let res = await request('home/catitems')
-      // this.menu = res.data.message
-      this.menu = await this.queryData('home/catitems')
-    },
-    async floorData () {
-      // 楼层数据
-      this.floor = await this.queryData('home/floordata')
-    },
+    // async swiperData () {
+    //   // 请求后台接口获取轮播图数据
+    //   // let that = this
+    //   // mpvue.request({
+    //   //   url: 'https://www.zhengzhicheng.cn/api/public/v1/home/swiperdata',
+    //   //   success: function (res) {
+    //   //     // console.log(res)
+    //   //     let {message} = res.data
+    //   //     // console.log(message)
+    //   //     // console.log(this)
+    //   //     that.swiper = message
+    //   //   }
+    //   // })
+    //   // let url = 'home/swiperdata'
+    //   // request(url, 'get', {}, {}, () => {
+    //   //   console.log(1)
+    //   // })
+    //   // request(url).then(res => {
+    //   //   console.log(res)
+    //   // })
+    //   // let res = await request('home/swiperdata')
+    //   // let {message} = res.data
+    //   // console.log(message)
+    //   // this.swiper = message
+    //   // this.swiper = res.data.message
+    //   this.swiper = await this.queryData('home/swiperdata')
+    // },
+    // async menuData () {
+    //   // 请求后台接口获取菜单数据
+    //   // let that = this
+    //   // mpvue.request({
+    //   //   url: 'home/catitems',
+    //   //   success: function (res) {
+    //   //     // console.log(res)
+    //   //     let {message} = res.data
+    //   //     // console.log(message)
+    //   //     // console.log(this)
+    //   //     that.menu = message
+    //   //   }
+    //   // })
+    //   // let res = await request('home/catitems')
+    //   // this.menu = res.data.message
+    //   this.menu = await this.queryData('home/catitems')
+    // },
+    // async floorData () {
+    //   // 楼层数据
+    //   this.floor = await this.queryData('home/floordata')
+    // },
     toTopHandle () {
       // 控制回到顶部
       // wx.pageScrollTo也可以,但是不推荐使用
       mpvue.pageScrollTo({
         scrollTop: 0
       })
+    },
+    async initData () {
+      this.swiper = await this.queryData('home/swiperdata')
+      this.menu = await this.queryData('home/catitems')
+      this.floor = await this.queryData('home/floordata')
     }
   },
   mounted () {
     // 调用接口请求方法
-    this.swiperData()
-    this.menuData()
-    this.floorData()
+    // this.swiperData()
+    // this.menuData()
+    // this.floorData()
+    this.initData()
+  },
+  onPullDownRefresh () {
+    //  下拉刷新,重新加载页面的数据
+    // console.log(123)
+    // this.swiperData()
+    // this.menuData()
+    // this.floorData()
+    this.initData()
   },
   onPageScroll (event) {
     // 小程序生命周期函数,监控页面的滚动
