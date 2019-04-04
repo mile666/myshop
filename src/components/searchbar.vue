@@ -2,9 +2,11 @@
  <!-- 搜索条 -->
   <div class="search-bar">
     <div class="search-input">
-      <icon type='search' color='#999'/>
-      <!-- <input placeholder="搜索"/> -->
-      <span>搜索</span>
+      <navigator url='/pages/search/main'>
+        <icon type='search' color='#999'/>
+        <!-- <input placeholder="搜索"/> -->
+        <span>搜索</span>
+      </navigator>
     </div>
    </div>
 </template>
