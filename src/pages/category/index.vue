@@ -5,11 +5,21 @@
     <!-- 菜单和内容 -->
     <div class="content">
       <div class="left">
-        <div :class="{active: currentIndex === index}" :key="item.cat_id" v-for="(item,index) in cate" class="menu-item">
+        <div :class='{active: currentIndex === index}' :key='item.cat_id' v-for='(item, index) in cate' class="menu-item">
           {{item.cat_name}}
         </div>
       </div>
-      <div class="right"></div>
+      <div class="right">
+        <div :key='item1.cat_id' v-for='item1 in rightData' class="brand-item">
+          <div class="brand-title">{{item1.cat_name}}</div>
+          <div class="brand-list">
+            <div :key='i' v-for='(img, i) in item1.children' class="brand">
+              <img :src="img.cat_icon" mode='aspectFill'>
+              <p>{{img.cat_name}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +30,8 @@ export default {
   data () {
     return {
       cate: [],
-      currentIndex: 0
+      currentIndex: 0,
+      rightData: []
     }
   },
   components: {
@@ -34,8 +45,11 @@ export default {
       // console.log(ret)
     }
   },
-  mounted () {
-    this.cateData()
+  async mounted () {
+    await this.cateData()
+    // 从全部分类数据中根据当前索引取出需要的对应的右侧数据
+    this.rightData = this.cate[this.currentIndex].children
+    console.log(this.rightData)
   }
 }
 </script>
