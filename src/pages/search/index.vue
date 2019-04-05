@@ -58,6 +58,10 @@ export default {
       // 把最新的数据覆盖到本地存储中
       mpvue.setStorageSync('keyword', this.keywordHistory)
       // console.log(mpvue.getStorageSync('keyword'))
+      // 跳转到商品列表页面
+      mpvue.navigateTo({
+        url: '/pages/search_list/main?query=' + this.keyword
+      })
     },
     cancelHandle () {
       // 清空输入框内容
