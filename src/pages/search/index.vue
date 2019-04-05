@@ -6,7 +6,7 @@
         <!-- 搜索输入框 -->
         <div class="search-input">
           <icon type='search' size='16'/> 
-          <input @confirm='comfirmHandle' @input='inputHandle' v-model='keyword' placeholder="请输入关键字"/>
+          <input @confirm='confirmHandle' @input='inputHandle' v-model='keyword' placeholder="请输入关键字" />
         </div>
         <button @click='cancelHandle' v-if='keyword' class="cancel">取消</button>
         <!-- 搜索结果 -->
@@ -23,11 +23,11 @@
       <icon type='clear' size='16' @click='clearHistory'/>
     </div>
     <div class="history-list">
-      <navigator :url='getUrl'>
-        <div :key='index' v-for='(item, index) in keywordHistory' class="history-item">
+      <div :key='index' v-for='(item, index) in keywordHistory' class="history-item">
+        <navigator :url="'/pages/search_list/main?query=' + item">
           {{item}}
-        </div>
-      </navigator>
+        </navigator>
+      </div>
     </div>
   </div>
 </template>
@@ -44,12 +44,16 @@ export default {
       keywordHistory: mpvue.getStorageSync('keyword') || []
     }
   },
-  computed: {
-    getUrl () {
-      return '/pages/search_list/main?query=' + this.keyword
-    }
-  },
+  // computed: {
+  //   // getUrl () {
+  //   //   return '/pages/search_list/main?query=' + this.keyword
+  //   // }
+  // },
   methods: {
+    // getUrl (kw) {
+    //   console.log(kw)
+    //   return '/pages/search_list/main?query=' + kw
+    // },
     clearHistory () {
       // 清空搜索关键字的历史信息
       // console.log(1)
@@ -58,7 +62,7 @@ export default {
       // 清空的是data中的数据
       this.keywordHistory = []
     },
-    comfirmHandle () {
+    confirmHandle () {
       // 当回车的时候,记录关键字到本地存储
       // push()是放在数组结尾;UNshift()是放在数组开头
       this.keywordHistory.unshift(this.keyword)
