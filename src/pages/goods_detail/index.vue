@@ -43,7 +43,7 @@
         <span class="iconfont icon-gouwuche"></span>
         <p>购物车</p>
       </navigator>
-      <div class="footer-right">
+      <div @click="addCart" class="footer-right">
         加入购物车
       </div>
       <div class="footer-right">
@@ -63,6 +63,22 @@ export default {
     }
   },
   methods: {
+    addCart () {
+      // 添加购物车实际上是把商品的信息填充到本地存储中
+      let cart = mpvue.getStorageSync('mycart') || {}
+      // 把商品的数量默认设置成1
+      this.detail.num = 1
+      // 把商品存入购物车:(商品的id: 商品的详情)---->键对应值
+      cart[this.detail.goods_id] = this.detail
+      // 添加完成购物车之后,从新把最新的数据再次覆盖原来的数据
+      mpvue.setStorageSync('mycart', cart)
+      console.log(mpvue.getStorageSync('mycart'))
+      // 添加完成之后,最好给一个提示
+      mpvue.showToast({
+        title: '添加成功',
+        icon: 'success'
+      })
+    },
     async loadData () {
       // 根据商品的id查询详细信息
       let res = await request('goods/detail', 'get', {
@@ -70,7 +86,7 @@ export default {
       })
       const {message} = res.data
       this.detail = message
-      console.log(this.detail)
+      // console.log(this.detail)
     }
   },
   onLoad (param) {
