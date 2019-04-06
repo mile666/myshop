@@ -22,6 +22,16 @@
         </div>
       </div>
     </div>
+    <!-- 商品的详细信息 -->
+    <div class="goods-detail">
+      <div class="goods-detail-title">
+        商品详情
+      </div>
+      <!-- 显示的是代码->富文本 -->
+      <!-- <div>{{detail.goods_introduce}}</div> -->
+      <!-- v-html:有一个安全问题,跨站脚本攻击,意思是嵌入的内容有可能有js代码 ,如果有js代码也会执行,所以v-html使用有一个原则:如果内容来自于本网站(同源)是信任的;如果跨域拿到的数据(从第三方拿到的内容)我们是不信任的,不会直接放在v-html中,因为有安全隐患 -->
+      <div v-html='detail.goods_introduce'></div>
+    </div>
   </div>
 </template>
 <script>
