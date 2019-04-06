@@ -39,7 +39,9 @@ export default {
       currentIndex: 0,
       list: [],
       pagenum: 1,
-      total: 0
+      total: 0,
+      // 保证接口调用完成之后才可以再次调用接口,如果接口正在获取数据,那么在这个过程中是不允许再次触发接口调用(和节流类似)
+      isLoading: false
     }
   },
   methods: {
@@ -48,6 +50,12 @@ export default {
       this.currentIndex = index
     },
     async loadData () {
+      // 是否已经加载完成
+      if (this.isLoading) {
+        return
+      }
+      // 作用: 禁止再次触发接口调用
+      this.isLoading = true
       // 通用的列表加载方法
       // 根据关键字加载匹配的商品列表数据
       // 调用后台接口获取数据
@@ -67,6 +75,8 @@ export default {
       // this.pagenum = this.pagenum + 1  //当成字符串处理了,需要转换
       // this.pagenum = parseInt(this.pagenum) + 1
       this.pagenum = this.pagenum + 1
+      // 接口数据返回之后,才允许再次触发请求
+      this.isLoading = false
     }
   },
   components: {
