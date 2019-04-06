@@ -4,7 +4,7 @@
     <swiper indicator-dots>
       <block v-for='(item, index) in detail.pics' :key="index">
         <swiper-item>
-          <image :src="item.pics_big_url" class="slide-image" model="aspectFill" />
+          <image :src="item.pics_big_url" class="slide-image" mode="aspectFill"/>
         </swiper-item>
       </block>
     </swiper>
@@ -32,6 +32,25 @@
       <!-- v-html:有一个安全问题,跨站脚本攻击,意思是嵌入的内容有可能有js代码 ,如果有js代码也会执行,所以v-html使用有一个原则:如果内容来自于本网站(同源)是信任的;如果跨域拿到的数据(从第三方拿到的内容)我们是不信任的,不会直接放在v-html中,因为有安全隐患 -->
       <div v-html='detail.goods_introduce'></div>
     </div>
+    <!-- 底部菜单 -->
+    <div class="footer">
+      <button class="contact"></button>
+      <div class="footer-left">
+        <span class="iconfont icon-kefu"></span>
+        <p>联系客服</p>
+      </div>
+      <navigator open-type="switchTab" class="footer-left">
+        <span class="iconfont icon-gouwuche"></span>
+        <p>购物车</p>
+      </navigator>
+      <div class="footer-right">
+        加入购物车
+      </div>
+      <div class="footer-right">
+        立即购买
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 <script>
