@@ -8,6 +8,20 @@
         </swiper-item>
       </block>
     </swiper>
+    <!-- 商品的基本信息 -->
+    <div class="goods-info">
+      <div class="goods-price">
+        ￥ {{detail.goods_price}}
+      </div>
+      <div class="goods-title">
+        <h4>{{detail.goods_name}}</h4>
+        <div class="goods-star">
+          <span class="iconfont icon-shoucang"></span>
+          <p>分享</p>
+          <button open-type='share' class="share-btn">分享</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
