@@ -62,7 +62,7 @@ export default {
       // }
       // 是否已经加载完成
       // 本次接口调用是否已经加载完成
-      if (this.isLoading || this.hasMore) {
+      if (this.isLoading && this.hasMore) {
         return
       }
       // 作用: 禁止再次触发接口调用
@@ -108,6 +108,13 @@ export default {
     // 页面初次展示的时候,调用loadData加载数据
     this.loadData()
   },
+  // onShow (param) {
+  //   // console.log(this.keyword)
+  //   console.log(this.hasMore,this.isLoading)
+  // },
+  // onHide () {
+  //   // this.hasMore = false
+  // },
   onReachBottom () {
     // 滚动条触底的时候触发该方法
     // console.log(111)
